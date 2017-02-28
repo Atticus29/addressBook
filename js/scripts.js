@@ -16,7 +16,7 @@ Contact.prototype.fullName = function() {
 }
 
 Address.prototype.fullAddress = function() {
-  return this.street + ", " + this.city + ", " + this.state;
+  return this.street + this.city + ", " + this.state;
 }
 
 function resetFields() {
@@ -43,8 +43,16 @@ function addNewAddress(){
                              '</div>');
 }
 
+function turnGreen() {
+  $("input").keypress(function(){
+    console.log("you pressed a key! You go!");
+    $("input").css("color", "green");
+  });
+}
+
 //user interface logic
 $(document).ready(function() {
+  turnGreen();
   $("#add-address").click(function() {
     addNewAddress();
   });
@@ -66,13 +74,13 @@ $(document).ready(function() {
     $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
 
     $(".contact").last().click(function() {
-      $("#show-contact").show();
+      $("#show-contact").fadeIn();
       $("#show-contact h2").text(newContact.fullName());
       $(".first-name").text(newContact.firstName);
       $(".last-name").text(newContact.lastName);
       $("ul#addresses").text("");
       newContact.addresses.forEach(function(address) {
-        $("ul#addresses").append("<li>" + address.fullAddress() + "</li>");
+        $("ul#addresses").append("<li>" + address.fullAddress() + "</li>").css("color", "red");
       });
     });
     resetFields();
